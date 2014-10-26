@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+var debug = require('debug')('bookmark');
+var app = require('../app');
+var webshot = require('webshot');
+
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+  //webshot('lovata.com', './lovata3.png', {shotsize:{height: 'all'}}, function(err) {
+  //  console.log('callback')
+  //  if (err) return console.log(err);
+  //  console.log('OK');
+  //});
+});
