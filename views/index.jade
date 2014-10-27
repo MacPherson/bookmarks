@@ -1,19 +1,22 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  h2 Todo
-    div(ng-controller='BookmarksCtrl')
-      span {{remaining()}} of {{todos.length}} remaining
-      | [
-      a(href='', ng-click='archive()') archive
-      | ]
-      ul.unstyled
-        li(ng-repeat='bookmark in bookmarks')
-          input(type='checkbox', ng-model='bookmark.done')
-          span {{bookmark.text}}
-          img(ng-src='{{bookmark.src}}', height="100", width="100")
-      form(ng-submit='addBookmarks()')
-        input(type='text', ng-model='todoText', size='30', placeholder='add new bookmark here')
-        input.btn-primary(type='submit', value='add')
+  form
+    h2 Закладки
+      div(ng-controller='BookmarksCtrl')
+        span {{remaining()}} из {{bookmarks.length}}
+        ul.list
+          li(ng-repeat='bookmark in bookmarks | filter: searchFilter')
+            input(type='checkbox', ng-model='bookmark.done')
+            span {{bookmark.text}}
+            span.tags
+              span.taglink(ng-repeat='tag in bookmark.tags', ng-click='tagFilter(tag)') {{tag}} {{$last ? '' : ', '}}
+            img(ng-src='{{bookmark.src}}', height="30", width="30")
+        form(ng-submit='addBookmarks()')
+          div
+            input(type='text', ng-model='bookmarkUrl', size='30', placeholder='add new bookmark here')
+          div
+            input(type='text', ng-model='bookmarkTags', size='30', placeholder='add tags')
+          div
+            input.btn-primary(type='submit', value='add', class='button')
+

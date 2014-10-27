@@ -1,8 +1,28 @@
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #ccc;
+  background-color: #fff;
+  font: 14px 'Open Sans', sans-serif;
 }
 a {
-  color: #000;
+  color: #333;
+}
+.tags {
+  margin-left: 20px;
+  color: #ccc;
+  font-size: 11px;
+}
+.tags span {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.tags span:hover {
+  color: #333;
 }
