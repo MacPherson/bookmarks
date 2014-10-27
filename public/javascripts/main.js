@@ -1,28 +1,45 @@
-angular.module('app', [])
-    .controller('TodoController', ['$scope', function($scope) {
-        $scope.todos = [
-            {text:'learn angular', done:true},
-            {text:'build an angular app', done:false}];
+var app = angular.module('app', []);
 
-        $scope.addTodo = function() {
-            console.log($scope.todoText)
-            $scope.todos.push({text:$scope.todoText, done:false});
+app.controller('BookmarksCtrl', ['$scope', '$http', function($scope, $http, canvasDraw) {
+    $scope.bookmarks = [
+        {text:'learn angular', done:true, url: 'http://habrahabr.ru', src: '/images/404.png'},
+        {text:'build an angular app', done:false, url: 'http://tut.by', src: '/images/404.png'}];
+
+    $scope.addBookmarks = function() {
+        $http.get('/api/screenshots', {
+            params: {url: $scope.todoText}
+        })
+        .success(function(data, satus, headers, config) {
+            $scope.bookmarks.push({
+                text:$scope.todoText,
+                done:false,
+                url: $scope.todoText,
+                src: data
+            });
             $scope.todoText = '';
-        };
+        })
+        .error(function(data, satus, headers, config) {
+            console.log('error')
+        })
+    };
 
-        $scope.remaining = function() {
-            var count = 0;
-            angular.forEach($scope.todos, function(todo) {
-                count += todo.done ? 0 : 1;
-            });
-            return count;
-        };
+    $scope.remaining = function() {
+        var count = 0;
+        angular.forEach($scope.bookmarks, function(todo) {
+            count += todo.done ? 0 : 1;
+        });
+        return count;
+    };
 
-        $scope.archive = function() {
-            var oldTodos = $scope.todos;
-            $scope.todos = [];
-            angular.forEach(oldTodos, function(todo) {
-                if (!todo.done) $scope.todos.push(todo);
-            });
-        };
-    }]);
+    $scope.preview = function() {
+        console.log('preview')
+    }
+
+    $scope.archive = function() {
+        var oldTodos = $scope.bookmarks;
+        $scope.bookmarks = [];
+        angular.forEach(oldTodos, function(todo) {
+            if (!todo.done) $scope.bookmarks.push(todo);
+        });
+    };
+}]);

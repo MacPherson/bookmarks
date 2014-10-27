@@ -33,9 +33,9 @@ app.get('/api/screenshots', function(req, res, next) {
     (function(urlImage) {
         webshot(req.query.url, urlImage, function(err) {
             if (err) return next(err);
-            res.send(urlImage);
+            res.send(urlImage.replace(/\.\/public/, ''));
         })
-    }('./upload/'+ Date.now() +'.png'));
+    }('./public/upload/'+ Date.now() +'.png'));
 });
 
 // catch 404 and forward to error handler
